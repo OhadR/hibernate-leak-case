@@ -18,7 +18,13 @@
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler />
 
+	<!-- ================================================ -->
+	<!-- Import for additional Spring config files -->
+	<!-- ================================================ -->
 	<import resource="component.conf.xml" />
+	<import resource="spring.batch.conf.xml" />
+	<import resource="quartz.conf.xml" />
+	<import resource="tasks.conf.xml" />
 	
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />

@@ -11,6 +11,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<ohadr.spring.version>4.2.3.RELEASE</ohadr.spring.version>
+		<spring_batch_version>3.0.5.RELEASE</spring_batch_version>
+		<quartz_version>2.1.7</quartz_version>
 	</properties>
 
     <dependencies>
@@ -147,7 +149,20 @@
 			<version>1.7.22</version>
 		</dependency>
 
-		
+
+
+
+		<dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-core</artifactId>
+			<version>${spring_batch_version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>${quartz_version}</version>
+		</dependency>
 		
 		
 

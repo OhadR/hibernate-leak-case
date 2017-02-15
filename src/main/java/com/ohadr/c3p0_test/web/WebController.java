@@ -24,7 +24,7 @@ public class WebController
 	protected void ping(
 			HttpServletResponse response) throws Exception{
 		log.info( "got to ping" );
-		response.getWriter().println("ping response: pong");
+		response.getWriter().println("ping response: pong, " + System.currentTimeMillis());
 	}
     
 
