@@ -5,9 +5,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-3.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
 	
 
-	<bean id="c3p0Status" class="com.ohadr.c3p0.leak_use_case.jobs.MyTasklet" scope="step">
-		<property name="taskName" value="#{jobParameters[taskName]}"/>
-	</bean>
+	<bean id="c3p0Status" class="com.ohadr.c3p0.leak_use_case.jobs.MyTasklet" scope="step" />
 	
 	<batch:job id="C3P0StatusTask">
 		<batch:description>c3p0 connection-pools status</batch:description>
@@ -15,6 +13,26 @@
 			<batch:tasklet ref="c3p0Status">
 				<batch:transaction-attributes propagation="NEVER" />
 			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+	
+	<!-- ###################################################################################################### -->
+
+
+	<bean id="myItemReader" class="com.ohadr.c3p0.leak_use_case.jobs.MyItemReader" scope="step" />
+	<bean id="myItemWriter" class="com.ohadr.c3p0.leak_use_case.jobs.MyItemWriter" scope="step" />
+	
+	<batch:job id="ChunkedJob">
+		<batch:step id="step0">
+			<tasklet>
+				<chunk reader="myItemReader"
+					writer="myItemWriter"
+					commit-interval="5">
+				</chunk>
+				<listeners>
+					<listener ref="myItemReader" />
+				</listeners>
+			</tasklet>
 		</batch:step>
 	</batch:job>
 	

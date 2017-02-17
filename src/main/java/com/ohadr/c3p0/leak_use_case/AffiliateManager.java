@@ -5,8 +5,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.ohadr.c3p0.leak_use_case.affiliate.AffiliateCampaignEntity;
-import com.ohadr.c3p0.leak_use_case.filter.data.CampaignEntity;
+import com.ohadr.c3p0.leak_use_case.entities.AffiliateCampaignEntity;
+import com.ohadr.c3p0.leak_use_case.entities.AffiliateEntity;
+import com.ohadr.c3p0.leak_use_case.entities.CampaignEntity;
 
 
 @Component

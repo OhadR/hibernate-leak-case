@@ -1,4 +1,4 @@
-package com.ohadr.c3p0.leak_use_case.affiliate;
+package com.ohadr.c3p0.leak_use_case.entities;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,8 +16,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
-import com.ohadr.c3p0.leak_use_case.AffiliateEntity;
-import com.ohadr.c3p0.leak_use_case.filter.data.CampaignEntity;
 
 /**
  * Links affiliate with campaigns.

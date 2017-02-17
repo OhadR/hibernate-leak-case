@@ -10,13 +10,21 @@ http://www.springframework.org/schema/batch http://www.springframework.org/schem
 	<!-- Spring Batch configuration			      -->
 	<!-- ================================================ -->
 
-    <job-repository id="jobRepository" isolation-level-for-create="DEFAULT" table-prefix="MARS_"/>
-    <beans:bean id="asyncJobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher" p:jobRepository-ref="jobRepository" p:taskExecutor-ref="taskExecutor"/>
-    <beans:bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher" p:jobRepository-ref="jobRepository"/>
+    <job-repository id="jobRepository" 
+    	data-source="dataSource"
+    	transaction-manager="transactionManager"
+    	isolation-level-for-create="DEFAULT" 
+    	table-prefix="MARS_"/>
+    <beans:bean id="asyncJobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher" 
+    	p:jobRepository-ref="jobRepository" p:taskExecutor-ref="taskExecutor"/>
+
+    <beans:bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher" 
+    	p:jobRepository-ref="jobRepository"/>
     <beans:bean id="jobExplorer" class="org.springframework.batch.core.explore.support.JobExplorerFactoryBean"  p:dataSource-ref="dataSource" p:tablePrefix="MARS_"/>	
     <beans:bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry"/>
     <beans:bean id="jobRegistryBeanPostProcessor" class="org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor" p:jobRegistry-ref="jobRegistry"/>
-    <beans:bean id="jobOperator" class="org.springframework.batch.core.launch.support.SimpleJobOperator" p:jobRepository-ref="jobRepository" p:jobExplorer-ref="jobExplorer" p:jobLauncher-ref="jobLauncher" p:jobRegistry-ref="jobRegistry"/>
+    <beans:bean id="jobOperator" class="org.springframework.batch.core.launch.support.SimpleJobOperator" 
+    	p:jobRepository-ref="jobRepository" p:jobExplorer-ref="jobExplorer" p:jobLauncher-ref="jobLauncher" p:jobRegistry-ref="jobRegistry"/>
 
 <!-- <beans:bean id="taskExecutor" class="org.springframework.core.task.SimpleAsyncTaskExecutor"/>  -->
 	<beans:bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" p:corePoolSize="30" p:maxPoolSize="150" p:queueCapacity="10" />

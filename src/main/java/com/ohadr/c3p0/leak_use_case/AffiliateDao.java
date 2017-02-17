@@ -3,6 +3,7 @@ package com.ohadr.c3p0.leak_use_case;
 import javax.persistence.TypedQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
+import com.ohadr.c3p0.leak_use_case.entities.AffiliateEntity;
 
 @Repository
 public class AffiliateDao extends BaseGenericDao<AffiliateEntity>

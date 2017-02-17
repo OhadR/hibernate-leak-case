@@ -1,7 +1,7 @@
 package com.ohadr.c3p0.leak_use_case;
 
 import org.apache.log4j.Logger;
-import com.ohadr.c3p0.leak_use_case.filter.data.CampaignEntity;
+import com.ohadr.c3p0.leak_use_case.entities.CampaignEntity;
 
 /**
  * this runnable runs in a loop (this flag becomes false) and keeps calling the AffiliateManager,

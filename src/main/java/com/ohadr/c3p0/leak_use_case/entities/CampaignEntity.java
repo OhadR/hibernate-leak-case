@@ -1,4 +1,4 @@
-package com.ohadr.c3p0.leak_use_case.filter.data;
+package com.ohadr.c3p0.leak_use_case.entities;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,12 +9,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import org.apache.commons.lang3.StringUtils;
-import com.ohadr.c3p0.leak_use_case.service.ServiceEntity;
 
 /**
  * Contains data about campaign.
@@ -61,10 +58,6 @@ public class CampaignEntity implements Serializable, Comparable<CampaignEntity>
 	@Column(name = "ACTIVE", nullable = false)
 	private Boolean active;
 
-	@ManyToOne
-	@JoinColumn(name = "SERVICE_ID")
-	private ServiceEntity service;
-
 	/**
 	 * Initializes a new instance of the CampaignEntity class.
 	 */
@@ -86,9 +79,9 @@ public class CampaignEntity implements Serializable, Comparable<CampaignEntity>
 	 *            specifies whether the campaign is active.
 	 * @param serviceEntity
 	 */
-	public CampaignEntity(String name, Date startDate, Date endDate, Boolean active, ServiceEntity serviceEntity)
+	public CampaignEntity(String name, Date startDate, Date endDate, Boolean active)
 	{
-		this(name, startDate, endDate, active, null, serviceEntity);
+		this(name, startDate, endDate, active, null);
 	}
 
 	/**
@@ -106,7 +99,7 @@ public class CampaignEntity implements Serializable, Comparable<CampaignEntity>
 	 *            campaign type {@link CampaignType}
 	 * @param serviceEntity
 	 */
-	public CampaignEntity(String name, Date startDate, Date endDate, Boolean active, CampaignType type, ServiceEntity serviceEntity)
+	public CampaignEntity(String name, Date startDate, Date endDate, Boolean active, CampaignType type)
 	{
 
 		if (StringUtils.isEmpty(name))
@@ -119,17 +112,11 @@ public class CampaignEntity implements Serializable, Comparable<CampaignEntity>
 			throw new IllegalArgumentException("active is null.");
 		}
 
-		if (serviceEntity == null)
-		{
-			throw new IllegalArgumentException("service Entity is null.");
-		}
-
 		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.active = active;
 		this.type = type;
-		this.service = serviceEntity;
 	}
 
 	/**
@@ -147,9 +134,9 @@ public class CampaignEntity implements Serializable, Comparable<CampaignEntity>
 	 *            specifies whether the campaign is active.
 	 * @param serviceEntity
 	 */
-	public CampaignEntity(Long campaignId, String name, Date startDate, Date endDate, Boolean active, ServiceEntity serviceEntity)
+	public CampaignEntity(Long campaignId, String name, Date startDate, Date endDate, Boolean active)
 	{
-		this(name, startDate, endDate, active, serviceEntity);
+		this(name, startDate, endDate, active);
 		this.campaignId = campaignId;
 	}
 
@@ -272,22 +259,6 @@ public class CampaignEntity implements Serializable, Comparable<CampaignEntity>
 		this.active = active;
 	}
 
-	/**
-	 * @return the service
-	 */
-	public ServiceEntity getService()
-	{
-		return service;
-	}
-
-	/**
-	 * @param service
-	 *            the service to set
-	 */
-	public void setService(ServiceEntity service)
-	{
-		this.service = service;
-	}
 
 	/**
 	 * @return the description
@@ -326,8 +297,6 @@ public class CampaignEntity implements Serializable, Comparable<CampaignEntity>
 		builder.append(endDate);
 		builder.append(", active=");
 		builder.append(active);
-		builder.append(", service=");
-		builder.append(service);
 		builder.append("]");
 		return builder.toString();
 	}
@@ -348,7 +317,6 @@ public class CampaignEntity implements Serializable, Comparable<CampaignEntity>
 		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((parentId == null) ? 0 : parentId.hashCode());
-		result = prime * result + ((service == null) ? 0 : service.hashCode());
 		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
@@ -411,13 +379,7 @@ public class CampaignEntity implements Serializable, Comparable<CampaignEntity>
 		}
 		else if (!parentId.equals(other.parentId))
 			return false;
-		if (service == null)
-		{
-			if (other.service != null)
-				return false;
-		}
-		else if (!service.equals(other.service))
-			return false;
+
 		if (startDate == null)
 		{
 			if (other.startDate != null)

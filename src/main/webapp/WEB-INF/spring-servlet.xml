@@ -5,18 +5,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 							http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
 						http://www.springframework.org/schema/context
-							http://www.springframework.org/schema/context/spring-context.xsd
-						http://www.springframework.org/schema/security 
-							http://www.springframework.org/schema/security/spring-security-3.2.xsd
-						http://www.springframework.org/schema/mvc
-							http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+							http://www.springframework.org/schema/context/spring-context.xsd">
 
-
-	<context:annotation-config />
-	<context:property-placeholder location="classpath:client.properties" />
-	<context:component-scan base-package="com.ohadr" />
-	<mvc:annotation-driven />
-	<mvc:default-servlet-handler />
 
 	<!-- ================================================ -->
 	<!-- Import for additional Spring config files -->
@@ -26,6 +16,14 @@
 	<import resource="quartz.conf.xml" />
 	<import resource="tasks.conf.xml" />
 	
+
+	<context:annotation-config />
+	<context:property-placeholder location="classpath:client.properties" />
+	<context:component-scan base-package="com.ohadr" />
+	<!-- mvc:annotation-driven />
+	<mvc:default-servlet-handler /-->
+
+
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
 		<property name="jdbcUrl"
