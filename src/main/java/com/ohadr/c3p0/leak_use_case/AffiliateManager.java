@@ -64,7 +64,6 @@ public class AffiliateManager
 	private boolean isActiveCampaign4Signup(final Date date, final CampaignEntity campaign)
 	{
 		boolean active = campaign != null;
-		active = campaign.getActive();
 
 		if (active)
 		{

@@ -47,7 +47,8 @@ public class WebController
     protected void getDataSourceStatus(
     		HttpServletResponse response) throws Exception
     {
-    	ConnectionPoolStatus status = getDataSourceStatus();
+		ComboPooledDataSource comboPooledDataSource = (ComboPooledDataSource)dataSource;
+    	ConnectionPoolStatus status = C3P0Utils.getConnectionPoolStatus(comboPooledDataSource);
     	ConnectionPoolStatusCollection coll = new ConnectionPoolStatusCollection();
     	coll.collection = new ArrayList<ConnectionPoolStatus>();
     	coll.collection.add(status);
@@ -56,13 +57,6 @@ public class WebController
     }
 
     
-	public ConnectionPoolStatus getDataSourceStatus()
-	{
-		ComboPooledDataSource comboPooledDataSource = (ComboPooledDataSource)dataSource;
-		return C3P0Utils.getConnectionPoolStatus(comboPooledDataSource);		
-	}
-
-
     @RequestMapping(value = "/leakTest", method = RequestMethod.GET)
     protected void runLeakTestCase(
             @RequestParam String action,

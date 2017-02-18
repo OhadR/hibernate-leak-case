@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,9 +38,6 @@ public class AffiliateCampaignEntity implements Serializable
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "CAMPAIGN_ID")
 	private CampaignEntity campaign;
-
-	@Column(name = "INSERT_DATE")
-	private Date insertDate;
 
 	@Column(name = "UPDATE_DATE", insertable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -77,11 +73,6 @@ public class AffiliateCampaignEntity implements Serializable
 		this.campaign = campaign;
 	}
 
-	@PrePersist
-	void preInsert() {
-		insertDate = new Date();
-	}
-	
 	/**
 	 * @return the affiliateCampaignId
 	 */
@@ -128,22 +119,6 @@ public class AffiliateCampaignEntity implements Serializable
 	public void setCampaign(CampaignEntity campaign)
 	{
 		this.campaign = campaign;
-	}
-
-	/**
-	 * @return the insertDate
-	 */
-	public Date getInsertDate()
-	{
-		return insertDate;
-	}
-
-	/**
-	 * @param insertDate the insertDate to set
-	 */
-	public void setInsertDate(Date insertDate)
-	{
-		this.insertDate = insertDate;
 	}
 
 	/**
@@ -205,12 +180,9 @@ public class AffiliateCampaignEntity implements Serializable
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString()
 	{
-		return "AffiliateCampaignEntity [affiliate=" + affiliate.getName() + ", campaign=" + (campaign == null? "null":campaign.getName()) + ", insertDate=" + insertDate + ", updateDate=" + updateDate + "]";
+		return "AffiliateCampaignEntity [affiliate=" + affiliate.getName() + ", campaign=" + (campaign == null? "null":campaign.getName()) + ", updateDate=" + updateDate + "]";
 	}
 }

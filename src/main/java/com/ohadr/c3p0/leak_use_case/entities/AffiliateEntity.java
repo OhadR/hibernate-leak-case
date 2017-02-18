@@ -1,6 +1,5 @@
 package com.ohadr.c3p0.leak_use_case.entities;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,8 +14,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import org.apache.commons.lang3.StringUtils;
 
@@ -41,16 +38,6 @@ public class AffiliateEntity
 	@Column(name = "NAME", nullable = false)
 	private String name;
 
-	@Column(name = "DESCRIPTION", nullable = true)
-	private String description;
-
-	@Column(name = "INSERT_DATE")
-	private Date insertDate;
-
-	@Column(name = "UPDATE_DATE", insertable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date updateDate;
-
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "affiliate")
 //	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "affiliate")
 	private Set<AffiliateCampaignEntity> affiliateCampaigns = new HashSet<AffiliateCampaignEntity>();
@@ -67,10 +54,8 @@ public class AffiliateEntity
 	 * 
 	 * @param name
 	 *            specifies the name.
-	 * @param description
-	 *            specifies the description; optional.
 	 */
-	public AffiliateEntity(final String name, final String description)
+	public AffiliateEntity(final String name)
 	{
 		if (StringUtils.isEmpty(name))
 		{
@@ -78,9 +63,6 @@ public class AffiliateEntity
 		}
 
 		this.name = name;
-		this.description = description;
-
-		insertDate = new Date();
 	}
 
 	/**
@@ -118,57 +100,6 @@ public class AffiliateEntity
 	}
 
 	/**
-	 * @return the description
-	 */
-	public String getDescription()
-	{
-		return description;
-	}
-
-	/**
-	 * @param description
-	 *            the description to set
-	 */
-	public void setDescription(String description)
-	{
-		this.description = description;
-	}
-
-	/**
-	 * @return the insertDate
-	 */
-	public Date getInsertDate()
-	{
-		return insertDate;
-	}
-
-	/**
-	 * @param insertDate
-	 *            the insertDate to set
-	 */
-	public void setInsertDate(Date insertDate)
-	{
-		this.insertDate = insertDate;
-	}
-
-	/**
-	 * @return the updateDate
-	 */
-	public Date getUpdateDate()
-	{
-		return updateDate;
-	}
-
-	/**
-	 * @param updateDate
-	 *            the updateDate to set
-	 */
-	public void setUpdateDate(Date updateDate)
-	{
-		this.updateDate = updateDate;
-	}
-
-	/**
 	 * @return the collections of the affiliate campaigns
 	 */
 	public Set<AffiliateCampaignEntity> getAffiliateCampaigns()
@@ -200,12 +131,6 @@ public class AffiliateEntity
 		if (campaignEntity == null)
 		{
 			throw new IllegalArgumentException("campaignEntity is null.");
-		}
-
-		if (campaignEntity.getParentId() != null)
-		{
-			final String message = String.format("The campaign with name %s is not parent campaign!", campaignEntity.getName());
-			throw new IllegalArgumentException(message);
 		}
 
 		// Check, if a property with same name exists already.
@@ -267,7 +192,7 @@ public class AffiliateEntity
 		String affiliateCampaignsText = "null";
 		affiliateCampaignsText = affiliateCampaigns.stream().map(AffiliateCampaignEntity::getCampaign).map(CampaignEntity::getName).collect(Collectors.toList()).toString();
 
-		return "AffiliateEntity [affiliateId=" + affiliateId + ", name=" + name + ", description=" + description + ", insertDate=" + insertDate + ", updateDate=" + updateDate + ", affiliateCampaigns="
+		return "AffiliateEntity [affiliateId=" + affiliateId + ", name=" + name + ", affiliateCampaigns="
 				+ affiliateCampaignsText + "]";
 	}
 }
