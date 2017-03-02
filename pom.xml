@@ -13,6 +13,8 @@
 		<ohadr.spring.version>4.2.3.RELEASE</ohadr.spring.version>
 		<spring_batch_version>3.0.5.RELEASE</spring_batch_version>
 		<quartz_version>2.1.7</quartz_version>
+		<!-- <hibernate.version>4.1.9.Final</hibernate.version>-->
+		 <hibernate.version>5.1.1.Final</hibernate.version>
 	</properties>
 
     <dependencies>
@@ -127,7 +129,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>4.1.9.Final</version>
+			<version>${hibernate.version}</version>
 		</dependency>
 		
 		<dependency>

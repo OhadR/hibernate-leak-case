@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import com.ohadr.c3p0.leak_use_case.entities.AffiliateCampaignEntity;
 import com.ohadr.c3p0.leak_use_case.entities.AffiliateEntity;
 import com.ohadr.c3p0.leak_use_case.entities.CampaignEntity;
@@ -38,7 +39,7 @@ public class AffiliateManager
 	}
 
 
-	public CampaignEntity getAffiliateActiveSignupCampaign(final String affiliateName) throws Exception 
+	public CampaignEntity getAffiliateActiveSignupCampaign(final String affiliateName) 
 	{
         AffiliateEntity affiliate = getAffiliate(affiliateName);
 		
@@ -55,7 +56,10 @@ public class AffiliateManager
 		{
 			CampaignEntity ce = ace.getCampaign();
 			if( isActiveCampaign4Signup(date, ce) )
+			{
+				log.info("CampaignEntity: " + ce);
 				return ce;
+			}
 		}
 
 		return null;
